@@ -172,16 +172,6 @@ except AttributeError:
     IMapIterator.__next__ = wrapper(IMapIterator.__next__)
 
 
-
-def get_map():
-    try:
-        from multiprocessing import Pool, cpu_count
-        p = Pool(min(4, cpu_count()), pool_sig)
-        imap = p.imap
-    except ImportError:
-        from itertools import imap
-    return imap
-
 if __name__ == "__main__":
     import doctest
     doctest.testmod(optionflags=doctest.ELLIPSIS)

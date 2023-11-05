@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import numpy as np
 from operator import itemgetter
 from itertools import chain
-from _common import read_acf, bediter, get_col_num, get_map
+from _common import read_acf, bediter, get_col_num
 from itertools import groupby, combinations
 from stouffer_liptak import z_score_combine
 
@@ -88,7 +88,6 @@ def adjust_pvals(fnames, col_num0, acfs, z=True):
     lag_max = acfs[-1][0][1]
 
     # parallelize if multiprocesing is installed.
-    imap = get_map()
     arg_iter = []
     for fname in fnames:
         # 9e-17 seems to be limit of precision for cholesky.
@@ -97,7 +96,7 @@ def adjust_pvals(fnames, col_num0, acfs, z=True):
                     for key, chromlist in groupby(bediter(fname, col_num0, 9e-117),
                             itemgetter("chrom"))))
 
-    for chrom, results in imap(_slk_chrom, arg_iter):
+    for chrom, results in list(map(_slk_chrom, arg_iter)):
         yield chrom, results
 
 

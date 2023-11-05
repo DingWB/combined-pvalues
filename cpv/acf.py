@@ -14,7 +14,7 @@ except ImportError:
     from itertools import groupby, chain
     izip = zip
     xrange = range
-from cpv._common import bediter, pairwise, get_col_num, get_map
+from cpv._common import bediter, pairwise, get_col_num
 
 
 def create_acf_list(lags):
@@ -87,7 +87,6 @@ def acf(fnames, lags, col_num0, partial=True, simple=False, mlog=True):
     implementation.
     """
     # reversing allows optimization below.
-    imap = get_map()
 
     arg_list = [] # chaining
     for fname in fnames:
@@ -97,7 +96,7 @@ def acf(fnames, lags, col_num0, partial=True, simple=False, mlog=True):
                     groupby(bediter(fname, col_num0), lambda a: a["chrom"])))
 
     unmerged_acfs = [] # separated by chrom. need to merge later.
-    for chrom_acf in imap(_acf_by_chrom, arg_list):
+    for chrom_acf in list(map(_acf_by_chrom, arg_list)):
         unmerged_acfs.append(chrom_acf)
 
     acfs = merge_acfs(unmerged_acfs)
