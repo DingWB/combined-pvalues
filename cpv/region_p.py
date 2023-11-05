@@ -93,7 +93,7 @@ def _gen_acf(region_info, fpvals, col_num, step):
     print("# Done with one-time ACF calculation", file=sys.stderr)
     return acfs
 
-def get_total_coverage(fpvals, col_num, step, out_val):
+def get_total_coverage(fpvals, col_num, step):
     """
     Calculate total bases of coverage in `fpvals`.
     Used for the sidak correction
@@ -108,14 +108,7 @@ def get_total_coverage(fpvals, col_num, step, out_val):
             #e = max(e, s + step)
             bases.update(range(s, e))
         total_coverage += len(bases)
-    out_val.value = total_coverage
-
-def _get_total_coverage(fpvals, col_num, step):
-    from multiprocessing import Process, Value
-    val = Value('f')
-    p = Process(target=get_total_coverage, args=(fpvals, col_num, step, val))
-    p.start()
-    return p, val
+    return total_coverage
 
 def sidak(p, region_length, total_coverage, message=[False]):
     """
@@ -171,13 +164,11 @@ def region_p(fpvals, fregions, col_num, step, z=True):
     # just use 2 for col_num, but dont need the p from regions.
 
     tree = read_regions(fregions)
-    process, total_coverage_sync = _get_total_coverage(fpvals, col_num, step)
+    total_coverage = get_total_coverage(fpvals, col_num, step)
 
     region_info = _get_ps_in_regions(tree, fpvals, col_num)
 
     acfs = _gen_acf(region_info, (fpvals,), col_num, step)
-    process.join()
-    total_coverage = total_coverage_sync.value
 
     # regions first and then create ACF for the longest one.
     print("%i bases used as coverage for sidak correction" % \
