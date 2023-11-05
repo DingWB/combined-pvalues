@@ -13,6 +13,6 @@ setup(name='cpv',
       packages=['cpv', 'cpv.tests'],
       install_requires=['scipy', 'numpy', 'toolshed', 'interlap'],
       scripts=['cpv/comb-p'],
-      long_description=open('README.rst').read(),
+      long_description=open('README.md').read(),
       classifiers=["Topic :: Scientific/Engineering :: Bio-Informatics"],
  )
