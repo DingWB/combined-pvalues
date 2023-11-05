@@ -7,5 +7,7 @@ Forked from https://github.com/brentp/combined-pvalues
 
 ## Installation
 ```shell
+# uninstall
+pip uninstall cpv
 pip install git+https://github.com/DingWB/combined-pvalues
 ```
