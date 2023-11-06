@@ -23,3 +23,6 @@ manhattan - a manhattan plot of values in a BED file.
 pipeline  - run the series of commands to find DMRs.
 ```
 
+### dist
+300 bp, ref: BSmooth
+500 bp, ref: Human body epigenome maps reveal noncanonical DNA methylation variation
