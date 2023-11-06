@@ -199,25 +199,25 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
                 % (fh.name, region_filter_p, region_filter_n, N),
                 file=sys.stderr)
 
-    try:
-        from cpv import manhattan
-        regions = manhattan.read_regions(fh.name)
+    # try:
+    #     from cpv import manhattan
+    #     regions = manhattan.read_regions(fh.name)
 
-        manhattan.manhattan(prefix + ".slk.bed.gz", 3, prefix.rstrip(".") + ".manhattan.png",
-                         False, ['#959899', '#484B4C'], "", False, None,
-                         regions=regions, bonferonni=False)
-    except ImportError:
-        pass # they dont have matplotlib
+    #     manhattan.manhattan(prefix + ".slk.bed.gz", 3, prefix.rstrip(".") + ".manhattan.png",
+    #                      False, ['#959899', '#484B4C'], "", False, None,
+    #                      regions=regions, bonferonni=False)
+    # except ImportError:
+    #     pass # they dont have matplotlib
 
 
-    if db is not None:
-        from cruzdb import Genome
-        g = Genome(db)
-        lastf = fh.name
-        with open(prefix + ".anno.%s.bed" % db, "w") as fh:
-            fh.write('#')
-            g.annotate(lastf, (table, "cpgIslandExt"), out=fh,
-                    feature_strand=True, parallel=len(spvals) > 500)
-        print("wrote: %s annotated with %s %s" % (fh.name, db, table), file=sys.stderr)
+    # if db is not None:
+    #     from cruzdb import Genome
+    #     g = Genome(db)
+    #     lastf = fh.name
+    #     with open(prefix + ".anno.%s.bed" % db, "w") as fh:
+    #         fh.write('#')
+    #         g.annotate(lastf, (table, "cpgIslandExt"), out=fh,
+    #                 feature_strand=True, parallel=len(spvals) > 500)
+    #     print("wrote: %s annotated with %s %s" % (fh.name, db, table), file=sys.stderr)
     return None
 
