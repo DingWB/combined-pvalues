@@ -156,8 +156,8 @@ def read_regions(fregions):
     for i, toks in enumerate(ts.reader(fregions, header=False)):
         if i == 0 and not (toks[1] + toks[2]).isdigit(): continue
         tree[toks[0]].add((int(toks[1]), int(toks[2]), toks))
-    sys.stderr.write("# read %i regions from %s\n" \
-            % (sum(len(v) for v in tree.values()), fregions))
+    # sys.stderr.write("# read %i regions from %s\n" \
+    #         % (sum(len(v) for v in tree.values()), fregions))
     return tree
 
 def region_p(fpvals, fregions, col_num, step, z=True):
