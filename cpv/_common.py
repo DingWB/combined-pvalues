@@ -156,20 +156,20 @@ def pool_sig():
     return signal.signal(signal.SIGINT, signal.SIG_IGN)
 
 # from aljunberg:  https://gist.github.com/aljungberg/626518 
-from multiprocessing.pool import IMapIterator
-def wrapper(func):
-    def wrap(self, timeout=None):
-        try:
-            timeout = threading.TIMEOUT_MAX
-        except AttributeError:
-            timeout = 1e100
-        return func(self, timeout=timeout)
-    return wrap
+# from multiprocessing.pool import IMapIterator
+# def wrapper(func):
+#     def wrap(self, timeout=None):
+#         try:
+#             timeout = threading.TIMEOUT_MAX
+#         except AttributeError:
+#             timeout = 1e100
+#         return func(self, timeout=timeout)
+#     return wrap
 
-try:
-    IMapIterator.next = wrapper(IMapIterator.next)
-except AttributeError:
-    IMapIterator.__next__ = wrapper(IMapIterator.__next__)
+# try:
+#     IMapIterator.next = wrapper(IMapIterator.next)
+# except AttributeError:
+#     IMapIterator.__next__ = wrapper(IMapIterator.__next__)
 
 
 if __name__ == "__main__":
