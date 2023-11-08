@@ -176,24 +176,24 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
         # print("wrote: %s, (regions with corrected-p < 0.05: %i)" \
         #         % (fh.name, N), file=sys.stderr)
 
-    regions_bed = fh.name
-    #if all(h in header for h in ('t', 'start', 'end')):
-    if region_filter_n is None: region_filter_n = 0
-    with ts.nopen(prefix + ".regions-t.bed", "w") as fh:
-        N = 0
-        for i, toks in enumerate(filter.filter(bed_files[0],
-            regions_bed, p_col_name=col_num)):
-            if i == 0: toks[0] = "#" + toks[0]
-            else:
-                if float(toks[6]) > region_filter_p: continue
-                if int(toks[4]) < region_filter_n: continue
-                #if region_filter_t and "/" in toks[7]:
-                #    # t-pos/t-neg. if the lower one is > region_filter_t?
-                #    vals = map(int, toks[7].split("/"))
-                #    if min(vals) > region_filter_t: continue
+    # regions_bed = fh.name
+    # #if all(h in header for h in ('t', 'start', 'end')):
+    # if region_filter_n is None: region_filter_n = 0
+    # with ts.nopen(prefix + ".regions-t.bed", "w") as fh:
+    #     N = 0
+    #     for i, toks in enumerate(filter.filter(bed_files[0],
+    #         regions_bed, p_col_name=col_num)):
+    #         if i == 0: toks[0] = "#" + toks[0]
+    #         else:
+    #             if float(toks[6]) > region_filter_p: continue
+    #             if int(toks[4]) < region_filter_n: continue
+    #             #if region_filter_t and "/" in toks[7]:
+    #             #    # t-pos/t-neg. if the lower one is > region_filter_t?
+    #             #    vals = map(int, toks[7].split("/"))
+    #             #    if min(vals) > region_filter_t: continue
 
-                N += 1
-            print("\t".join(toks), file=fh)
+    #             N += 1
+    #         print("\t".join(toks), file=fh)
         # print(("wrote: %s, (regions with region-p "
         #                     "< %.3f and n-probes >= %i: %i)") \
         #         % (fh.name, region_filter_p, region_filter_n, N),
