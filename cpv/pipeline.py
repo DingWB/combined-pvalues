@@ -163,7 +163,7 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
         sys.exit()
 
     with ts.nopen(prefix + ".regions-p.bed.gz", "w") as fh:
-        N = 0
+        # N = 0
         fh.write("#chrom\tstart\tend\tmin_p\tn_probes\tz_p\tz_sidak_p\n")
         # use -2 for original, uncorrected p-values in slk.bed
         for region_line, slk_p, slk_sidak_p, sim_p in region_p.region_p(
@@ -172,7 +172,7 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
                                step):
             fh.write("%s\t%.4g\t%.4g\n" % (region_line, slk_p, slk_sidak_p))
             fh.flush()
-            N += int(slk_sidak_p < 0.05)
+            # N += int(slk_sidak_p < 0.05)
         # print("wrote: %s, (regions with corrected-p < 0.05: %i)" \
         #         % (fh.name, N), file=sys.stderr)
 
