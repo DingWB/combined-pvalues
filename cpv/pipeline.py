@@ -198,6 +198,7 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
         #                     "< %.3f and n-probes >= %i: %i)") \
         #         % (fh.name, region_filter_p, region_filter_n, N),
         #         file=sys.stderr)
+    print(','.join(bed_files)," done!")
 
     # try:
     #     from cpv import manhattan
