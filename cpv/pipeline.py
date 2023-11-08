@@ -220,5 +220,5 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
     #         g.annotate(lastf, (table, "cpgIslandExt"), out=fh,
     #                 feature_strand=True, parallel=len(spvals) > 500)
     #     print("wrote: %s annotated with %s %s" % (fh.name, db, table), file=sys.stderr)
-    return None
+    return bed_files
 
