@@ -203,7 +203,8 @@ def _conflict_bail(VC_err, version):
         """)
     msg = conflict_tmpl.format(**locals())
     sys.stderr.write(msg)
-    sys.exit(2)
+    # sys.exit(2)
+    os._exit(1)
 
 
 def _unload_pkg_resources():

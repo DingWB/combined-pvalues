@@ -119,7 +119,8 @@ def genome_control_adjust_bed(bedfiles, colnum, outfh):
     if len(bedfiles) > 1:
         print("can't do genomic control adjustment with more than 1 bed file",
                 file=sys.stderr)
-        sys.exit(4)
+        # sys.exit(4)
+        return 
     for j, bedfile in enumerate(bedfiles):
         for i, toks in enumerate(line.rstrip("\r\n").split("\t") \
                 for line in ts.nopen(bedfile)):

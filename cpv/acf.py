@@ -171,7 +171,8 @@ def main():
     p.add_argument('files', nargs='+', help='files to process')
     args = p.parse_args()
     if (len(args.files) == 0):
-        sys.exit(not p.print_help())
+        # sys.exit(not p.print_help())
+        os._exit(1)
     return run(args)
 
 if __name__ == "__main__":

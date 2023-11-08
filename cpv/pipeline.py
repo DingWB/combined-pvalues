@@ -163,6 +163,7 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
         print(','.join([os.path.basename(bed_file) for bed_file in bed_files]))
         return bed_files
         # sys.exit()
+        # os._exit(1)
 
     with ts.nopen(prefix + ".regions-p.bed.gz", "w") as fh:
         # N = 0
