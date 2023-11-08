@@ -46,7 +46,7 @@ def gen_correlated(sigma, n, observed=None):
 
 def sl_sim(sigma, ps, nsims, sample_distribution=None):
     N = 0
-    print("nsims:", nsims, file=sys.stderr)
+    # print("nsims:", nsims, file=sys.stderr)
     w0 = stouffer_liptak(ps, sigma)["p"]
     # TODO parallelize here.
     for i in range(10):
@@ -70,7 +70,7 @@ def _gen_acf(region_info, fpvals, col_num, step):
     # calculate the ACF as far out as needed...
     # keys of region_info are (chrom, start, end)
     max_len = max(int(r[2]) - int(r[1]) for r in region_info)
-    print("# calculating ACF out to: %i" % max_len, file=sys.stderr)
+    # print("# calculating ACF out to: %i" % max_len, file=sys.stderr)
 
     lags = list(range(1, max_len, step))
     if len(lags) == 0:
@@ -83,14 +83,14 @@ def _gen_acf(region_info, fpvals, col_num, step):
                     ", ".join(map(str, lags[-5:])) + "]"
     else:
         repr_lags = str(lags)
-    print("#           with %-2i lags: %s" \
-            % (len(lags), repr_lags), file=sys.stderr)
+    # print("#           with %-2i lags: %s" \
+    #         % (len(lags), repr_lags), file=sys.stderr)
 
-    if len(lags) > 100:
-        print("# !! this could take a looong time", file=sys.stderr)
-        print("# !!!! consider using a larger step size (-s)", file=sys.stderr)
+    # if len(lags) > 100:
+    #     print("# !! this could take a looong time", file=sys.stderr)
+    #     print("# !!!! consider using a larger step size (-s)", file=sys.stderr)
     acfs = acf(fpvals, lags, col_num, simple=True)
-    print("# Done with one-time ACF calculation", file=sys.stderr)
+    # print("# Done with one-time ACF calculation", file=sys.stderr)
     return acfs
 
 def get_total_coverage(fpvals, col_num, step):
@@ -171,8 +171,8 @@ def region_p(fpvals, fregions, col_num, step, z=True):
     acfs = _gen_acf(region_info, (fpvals,), col_num, step)
 
     # regions first and then create ACF for the longest one.
-    print("%i bases used as coverage for sidak correction" % \
-                                (total_coverage), file=sys.stderr)
+    # print("%i bases used as coverage for sidak correction" % \
+    #                             (total_coverage), file=sys.stderr)
     sample_distribution = np.array([b["p"] for b in bediter(fpvals,
                                                                 col_num)])
 
@@ -182,13 +182,13 @@ def region_p(fpvals, fregions, col_num, step, z=True):
         sigma = gen_sigma_matrix(prows, acfs)
         ps = np.array([prow["p"] for prow in prows])
         if ps.shape[0] == 0:
-            print("bad region", region, file=sys.stderr)
+            # print("bad region", region, file=sys.stderr)
             continue
 
         # calculate the SLK for the region.
         region_slk = combine(ps, sigma)
-        if not region_slk["OK"]:
-            print("problem with:", region_slk, ps, file=sys.stderr)
+        # if not region_slk["OK"]:
+        #     print("problem with:", region_slk, ps, file=sys.stderr)
 
         slk_p = region_slk["p"]
 

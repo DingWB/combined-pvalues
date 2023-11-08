@@ -113,8 +113,8 @@ def acf(fnames, lags, col_num0, partial=True, simple=False, mlog=True):
             xs = np.hstack((xs, xys["x"]))
             ys = np.hstack((ys, xys["y"]))
         if len(xs) == 0:
-            print("no values found at lag: %i-%i. skipping" \
-                    % (lmin, lmax), file=sys.stderr)
+            # print("no values found at lag: %i-%i. skipping" \
+            #         % (lmin, lmax), file=sys.stderr)
             continue
         if mlog:
             xs[xs == 0] = 1e-12
