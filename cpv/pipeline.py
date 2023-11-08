@@ -89,7 +89,7 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
 
     if step is None:
         step = min(acf_dist, stepsize.stepsize(bed_files, col_num))
-        print("calculated stepsize as: %i" % step, file=sys.stderr)
+        # print("calculated stepsize as: %i" % step, file=sys.stderr)
 
     lags = list(range(1, acf_dist, step))
     lags.append(lags[-1] + step)
@@ -119,7 +119,7 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
     with open(prefix + ".acf.txt", "w") as fh:
         acf_vals = acf.write_acf(acf_vals, fh)
         print("wrote: %s" % fh.name, file=fh)
-    print("ACF:\n", open(prefix + ".acf.txt").read(), file=sys.stderr)
+    # print("ACF:\n", open(prefix + ".acf.txt").read(), file=sys.stderr)
 
     spvals, opvals = array.array('f'), array.array('f')
     with ts.nopen(prefix + ".slk.bed.gz", "w") as fhslk:
@@ -132,12 +132,12 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
                 opvals.append(row[-2])
                 spvals.append(row[-1])
 
-    print("# original lambda: %.2f" % genomic_control(opvals), file=sys.stderr)
+    # print("# original lambda: %.2f" % genomic_control(opvals), file=sys.stderr)
     del opvals
 
     gc_lambda = genomic_control(spvals)
-    print("wrote: %s with lambda: %.2f" % (fhslk.name, gc_lambda),
-            file=sys.stderr)
+    # print("wrote: %s with lambda: %.2f" % (fhslk.name, gc_lambda),
+    #         file=sys.stderr)
 
     if genome_control:
         fhslk = ts.nopen(prefix + ".slk.gc.bed.gz", "w")
@@ -146,19 +146,19 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
             print("%s\t%.5g" % (line.rstrip("\r\n"), adj[i]), file=fhslk)
 
         fhslk.close()
-        print("wrote: %s" % fhslk.name, file=sys.stderr)
+        # print("wrote: %s" % fhslk.name, file=sys.stderr)
 
     with ts.nopen(prefix + ".fdr.bed.gz", "w") as fh:
         fh.write('#chrom\tstart\tend\tp\tregion-p\tregion-q\n')
         for bh, l in fdr.fdr(fhslk.name, -1):
             fh.write("%s\t%.4g\n" % (l.rstrip("\r\n"), bh))
-        print("wrote: %s" % fh.name, file=sys.stderr)
+        # print("wrote: %s" % fh.name, file=sys.stderr)
     fregions = prefix + ".regions.bed.gz"
     with ts.nopen(fregions, "w") as fh:
         list(peaks.peaks(prefix + ".fdr.bed.gz", -1 if use_fdr else -2, threshold, seed,
             dist, fh, operator.le))
     n_regions = sum(1 for _ in ts.nopen(fregions))
-    print("wrote: %s (%i regions)" % (fregions, n_regions), file=sys.stderr)
+    # print("wrote: %s (%i regions)" % (fregions, n_regions), file=sys.stderr)
     if n_regions == 0:
         sys.exit()
 
@@ -173,8 +173,8 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
             fh.write("%s\t%.4g\t%.4g\n" % (region_line, slk_p, slk_sidak_p))
             fh.flush()
             N += int(slk_sidak_p < 0.05)
-        print("wrote: %s, (regions with corrected-p < 0.05: %i)" \
-                % (fh.name, N), file=sys.stderr)
+        # print("wrote: %s, (regions with corrected-p < 0.05: %i)" \
+        #         % (fh.name, N), file=sys.stderr)
 
     regions_bed = fh.name
     #if all(h in header for h in ('t', 'start', 'end')):
@@ -194,10 +194,10 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
 
                 N += 1
             print("\t".join(toks), file=fh)
-        print(("wrote: %s, (regions with region-p "
-                            "< %.3f and n-probes >= %i: %i)") \
-                % (fh.name, region_filter_p, region_filter_n, N),
-                file=sys.stderr)
+        # print(("wrote: %s, (regions with region-p "
+        #                     "< %.3f and n-probes >= %i: %i)") \
+        #         % (fh.name, region_filter_p, region_filter_n, N),
+        #         file=sys.stderr)
 
     # try:
     #     from cpv import manhattan
