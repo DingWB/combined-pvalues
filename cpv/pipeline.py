@@ -1,5 +1,5 @@
 from __future__ import print_function
-import sys
+import os,sys
 import array
 import os.path as op
 import toolshed as ts
@@ -198,7 +198,7 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
         #                     "< %.3f and n-probes >= %i: %i)") \
         #         % (fh.name, region_filter_p, region_filter_n, N),
         #         file=sys.stderr)
-    print(','.join(bed_files)," done!")
+    print(','.join([os.path.basename(bed_file) for bed_file in bed_files])," done!")
 
     # try:
     #     from cpv import manhattan
