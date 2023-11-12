@@ -77,12 +77,12 @@ def _gen_acf(region_info, fpvals, col_num, step):
         lags.append(max_len)
 
     if lags[-1] < max_len: lags.append(lags[-1] + step)
-    if len(lags) > 20:
-        repr_lags = "[" + ", ".join(map(str, lags[1:4])) + \
-                    " ... " + \
-                    ", ".join(map(str, lags[-5:])) + "]"
-    else:
-        repr_lags = str(lags)
+    # if len(lags) > 20:
+    #     repr_lags = "[" + ", ".join(map(str, lags[1:4])) + \
+    #                 " ... " + \
+    #                 ", ".join(map(str, lags[-5:])) + "]"
+    # else:
+    #     repr_lags = str(lags)
     # print("#           with %-2i lags: %s" \
     #         % (len(lags), repr_lags), file=sys.stderr)
 

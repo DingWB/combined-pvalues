@@ -85,6 +85,8 @@ def pipeline(col_num, step, dist, acf_dist, prefix, threshold, seed, table,
     from cpv import acf, slk, fdr, peaks, region_p, stepsize, filter
     from cpv._common import genome_control_adjust, genomic_control, bediter
     import operator
+    import warnings
+    warnings.filterwarnings("ignore")
 
 
     if step is None:
